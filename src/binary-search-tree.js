@@ -1,3 +1,6 @@
+const {NotImplementedError} = require('../extensions/index.js');
+
+
 const { Node } = require('../extensions/list-tree.js')
 
 /**
@@ -6,15 +9,15 @@ const { Node } = require('../extensions/list-tree.js')
  */
 module.exports = class BinarySearchTree {
     constructor() {
-        this.root = null
+        this.roots = null
     }
     root() {
-        return this.root
+        return this.roots
     }
 
     add(data) {
-        this.root = addData(this.root, data)
-        function addData(node, data) {
+        this.roots = addInside(this.roots, data)
+        function addInside(node, data) {
             if (!node) {
                 return new Node(data)
             }
@@ -22,16 +25,16 @@ module.exports = class BinarySearchTree {
                 return node
             }
             if (data < node.data) {
-                node.left = addData(node.left, data)
+                node.left = addInside(node.left, data)
             } else {
-                node.right = addData(node.right, data)
+                node.right = addInside(node.right, data)
             }
             return node
         }
     }
 
     has(data) {
-        return searchData(this.root, data)
+        return searchData(this.roots, data)
         function searchData(node, data) {
             if (!node) {
                 return false
@@ -48,7 +51,7 @@ module.exports = class BinarySearchTree {
     }
 
     find(data) {
-        return searchData(this.root, data)
+        return searchData(this.roots, data)
         function searchData(node, data) {
             if (!node) {
                 return null
@@ -65,7 +68,7 @@ module.exports = class BinarySearchTree {
     }
 
     remove(data) {
-        this.root = removeNode(this.root, data)
+        this.roots = removeNode(this.roots, data)
         function removeNode(node, data) {
             if (!node) {
                 return null
@@ -100,10 +103,10 @@ module.exports = class BinarySearchTree {
     }
 
     min() {
-        if (!this.root) {
+        if (!this.roots) {
             return
         }
-        let node = this.root
+        let node = this.roots
         while (node.left) {
             node = node.left
         }
@@ -111,10 +114,10 @@ module.exports = class BinarySearchTree {
     }
 
     max() {
-        if (!this.root) {
+        if (!this.roots) {
             return
         }
-        let node = this.root
+        let node = this.roots
         while (node.right) {
             node = node.right
         }
